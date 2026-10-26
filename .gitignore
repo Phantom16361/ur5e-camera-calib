@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+handeye_samples*.json
+overhead_samples_*.json
+overhead_*.yaml
+*.tar.gz
