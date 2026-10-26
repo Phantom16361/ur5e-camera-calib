@@ -176,6 +176,11 @@ Captures are saved as you go: after a crash, add `--resume`. **Check:** in RViz,
 | RealSense log shows "Stopping/Starting Sensor" by itself | USB reset: use a USB 3 port directly on the laptop, not a hub; keep the webcam on another port |
 | UR driver: "calibration parameters ... don't match" | The robot's factory kinematics aren't loaded. Optional fix (a few mm): `ros2 launch ur_calibration calibration_correction.launch.py robot_ip:=<ip> target_filename:=$HOME/ur5e_calibration.yaml`, then add `kinematics_params_file:=...` to the driver launch and redo C3 |
 
+## Reference values
+
+Our own settings, intrinsics and transforms are in [`reference/REFERENCE.md`](reference/REFERENCE.md), for
+sanity-checking yours (not for reuse: every camera, bracket and station differs).
+
 ## License
 
 MIT (see `LICENSE`). Use, modify and share; a mention is appreciated.
