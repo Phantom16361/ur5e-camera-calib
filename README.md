@@ -78,6 +78,7 @@ Save the layout (File → Save Config As) and start it later with `rviz2 -d your
 ---
 
 ## C1 – Overhead camera intrinsics
+![Calibration result for C1](reference/C1_Calibration.png)
 
 You need a flat checkerboard. Ours: 13×9 squares (= **12×8 inner corners**), 30 mm squares.
 
@@ -107,6 +108,9 @@ You need a flat checkerboard. Ours: 13×9 squares (= **12×8 inner corners**), 3
 
 ## C3 – Wrist camera hand-eye (eye-in-hand)
 
+
+![Marker Setup for C3](reference/C3_Calibration.png)
+
 Target: a printed AprilTag/ArUco grid or ChArUco board, taped flat to the table and **not touched** during capture.
 Measure it with a ruler: the tag size is the **black square only**, and the pitch is centre to centre.
 
@@ -132,7 +136,7 @@ Collect 15–20 **varied** poses: tilt 20–40° in different directions, rotate
 ## C2 – Overhead camera → robot frame
 ## C2 Setup
 
-![Expected RViz result after calibration](reference/C2_Setup.jpg)
+![ArUco marker Setup for C2](reference/C2_Setup.jpg)
 
 Uses the (already calibrated) wrist camera as a measuring tool: it measures where some markers are in
 `base_link`, then the overhead camera's pose is solved from the same markers. Markers are only needed during
