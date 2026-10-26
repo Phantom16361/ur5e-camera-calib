@@ -130,6 +130,9 @@ Collect 15–20 **varied** poses: tilt 20–40° in different directions, rotate
 ---
 
 ## C2 – Overhead camera → robot frame
+## C2 Setup
+
+![Expected RViz result after calibration](reference/C2_Setup.jpg)
 
 Uses the (already calibrated) wrist camera as a measuring tool: it measures where some markers are in
 `base_link`, then the overhead camera's pose is solved from the same markers. Markers are only needed during
