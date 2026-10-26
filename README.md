@@ -1,7 +1,7 @@
 # UR5e camera calibration tools (ROS 2 Humble)
 ## Expected Results
 
-![Expected RViz result after calibration](references/Expected_results.png)
+![Expected RViz result after calibration](reference/Expected_results.png)
 
 *Expected RViz result after calibration*
 Small, standalone Python/bash tools for calibrating the cameras on a lab UR5e:
