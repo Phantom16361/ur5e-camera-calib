@@ -21,6 +21,43 @@ will differ, so calibrate your own; use these to check that yours are in the sam
 
 Set these **before and after** starting `usb_cam`, which can reset them.
 
+
+### Applying the settings by hand (copy and run)
+
+Plug in the LifeCam, then run these in a terminal. They work without ROS.
+
+```bash
+# 1. Find the camera (stable path that survives replugging)
+LC=$(readlink -f "$(ls /dev/v4l/by-id/*LifeCam*-video-index0 | head -n1)")
+echo "LifeCam is $LC"
+
+# 2. Apply the settings. Order matters: switch auto modes OFF before setting manual values
+v4l2-ctl -d "$LC" -c power_line_frequency=1          # 50 Hz mains (use 2 for 60 Hz countries)
+v4l2-ctl -d "$LC" -c focus_automatic_continuous=0    # autofocus off
+v4l2-ctl -d "$LC" -c focus_absolute=7                # 0-40
+v4l2-ctl -d "$LC" -c auto_exposure=1                 # 1 = manual
+v4l2-ctl -d "$LC" -c exposure_time_absolute=39       # ONLY 5,10,20,39,78,156,312... work
+v4l2-ctl -d "$LC" -c white_balance_automatic=0       # auto white balance off
+v4l2-ctl -d "$LC" -c white_balance_temperature=3000  # 2500-10000 K
+v4l2-ctl -d "$LC" -c brightness=30                   # 30-255 (acts like gain)
+
+# 3. Check they stuck
+v4l2-ctl -d "$LC" --list-ctrls | grep -E "exposure|focus|white_balance|brightness|power_line"
+```
+
+**Re-run step 2 after starting `usb_cam`**: it can reset the controls when it opens the camera.
+(`setup_overhead_cam.sh --launch` does all of this for you, including the re-apply.)
+
+**Tuning for your own lighting:** with the camera streaming (`ros2 run rqt_image_view rqt_image_view`
+or `cheese`), change one value at a time and watch the image:
+- Too dark or too bright: step the exposure along the ladder (20 ↔ 39 ↔ 78), then fine-tune with `brightness`.
+- Colours too blue or orange: change `white_balance_temperature` in steps of about 500 K.
+- Blurry: try `focus_absolute` values around 0–15 with the table in view.
+
+Once you've changed focus or resolution, redo the intrinsic calibration (C1).
+
+**Undo everything** (back to auto): `v4l2-ctl -d "$LC" -c auto_exposure=3 -c white_balance_automatic=1 -c focus_automatic_continuous=1`
+
 ### Intrinsics (C1), 1920×1080
 
 ROS `camera_calibration`, 13×9-square checkerboard (12×8 inner corners), 30 mm squares,
